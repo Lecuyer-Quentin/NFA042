@@ -1,0 +1,25 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.table th, .table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+.table thead tr:first-of-type {
+    background-color: #333;
+    color: white;
+}
+.table thead tr:first-of-type th {
+    text-align: left;
+}
+.table tfoot tr td{
+    text-align: right;
+}
+.table th, .table td {
+    width: 25%;
+}
+.table tbody div {
+    display: flex;
+}

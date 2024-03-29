@@ -1,0 +1,21 @@
+.action_btn{
+    cursor: pointer;
+    margin: 0 5px;
+}
+.action_btn button, .table tbody div button{
+    position: relative;
+    background-color: var(--tertiary-bg);
+    color: var(--secondary-text);
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    transition: all 0.3s;
+}
+.table tbody div button a{
+    color: var(--secondary-text);
+    text-decoration: none;
+}
+.action_btn button:hover, .table tbody div button:hover{
+    box-shadow: 0 0 5px rgba(0,0,0,0.9);
+    background-color: var(--tertiary-light-bg);
+}

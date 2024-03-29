@@ -1,0 +1,41 @@
+.back_btn {
+    position: relative;
+    display: flex;
+    height: 3em;
+    width: 100px;
+    align-items: center;
+    justify-content: center;
+    background-color: #333;
+    border-radius: 3px;
+    transition: all 0.2s linear;
+    border: none;
+    margin: .3rem;
+   }
+
+   .back_btn input[type="submit"] {
+    background-color: transparent;
+    border-radius: 3px;
+    letter-spacing: 1px;
+    transition: all 0.2s linear;
+    cursor: pointer;
+    border: none;
+    color: #fff;
+   }
+
+   
+   .back_btn > svg {
+    margin-right: 5px;
+    margin-left: 5px;
+    font-size: 20px;
+    transition: all 0.4s linear;
+   }
+   
+   .back_btn:hover > svg {
+    font-size: 1.2em;
+    transform: translateX(-5px);
+   }
+   
+   .back_btn:hover {
+    box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
+    transform: translateY(-2px);
+   }

@@ -1,0 +1,17 @@
+.menu_btn{
+    background-color: var(--primary-bg);
+    color: var(--secondary-text);
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
+    margin: 0 0 15px 0;
+    border-top: transparent 2px solid;
+    border-radius: 0 0 5px 5px;
+    transition: all 0.3s;
+}
+
+.menu_btn:hover{
+    background-color: var(--secondary-light-bg);
+    color: var(--tertiary-text);
+    border-top: var(--tertiary-bg) 2px solid;
+}
