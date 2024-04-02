@@ -1,58 +1,75 @@
 <?php
 require_once '../api/users/register_user.php';
 require_once '../api/users/check_user.php';
+require_once '../utils/error_message.php';
+
+
 
 if($_SERVER['REQUEST_METHOD'] == "POST") {
+    $error_register = [];
+    $hashed_password = null;
 
     if(!isset($_POST['nom'])) {
-        die("Veuillez entrer un nom");
+        $error_register[] = translateErrorMessage('Error_001[NAME]');
     }
     $nom = $_POST['nom'];
+
     if(!isset($_POST['prenom'])) {
-        die("Veuillez entrer un prénom");
+        $error_register[] = translateErrorMessage('Error[PRENOM]');
     }
     $prenom = $_POST['prenom'];
-    if(!isset($_POST['email'])) {
-        die("Veuillez entrer un email");
+
+    if(!isset($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+        $error_register[] = translateErrorMessage('Error[EMAIL]');
     }
     $email = $_POST['email'];
-    if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        die("Email invalide");
-    }
+   
     if(!isset($_POST['password'])) {
-        die("Veuillez entrer un mot de passe");
+        $error_register[] = translateErrorMessage('Error[PASSWORD]');
     }
     $password = $_POST['password'];
+
     if(!isset($_POST['password_confirm'])) {
-        die("Veuillez confirmer le mot de passe");
+        $error_register[] = translateErrorMessage('Error[PASSWORD_CONFIRM]');
     }
     $password_confirm = $_POST['password_confirm'];
 
     if(!isset($_POST['role']) || !is_numeric($_POST['role'])) {
-        die("Invalid role");
+        $error_register[] = translateErrorMessage('Error[ROLE]');
     }
     $role = $_POST['role'];
 
+    //? Améliorer la gestion du mot de passe en ajoutant des contraintes de complexité
+    //if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/', $password)) {
+    //     $error_register[] = translateErrorMessage('Error[PASSWORD_COMPLEXITY]');
+    //}
+
     if($password !== $password_confirm) {
-        die("Passwords do not match");
+        $error_register[] = translateErrorMessage('Error[PASSWORD_CONFIRM]');   
+    }
+    
+    if($password === $password_confirm) { 
+        $hashed_password = password_hash($password_confirm, PASSWORD_BCRYPT);
+        if ($hashed_password === false) {
+            $error_register[] = translateErrorMessage('Error[HASH]');
+        }
     }
 
-    $hashed_password = password_hash($password_confirm, PASSWORD_BCRYPT);
-    if ($hashed_password === false) {
-        die("Password hashing failed");
-    }
 
     try{
-        registerUserInDb($nom, $prenom, $email, $role, $hashed_password);
-        //! checkUserInDB ne fonctionne pas ICI
-        //! mais l'utilisateur est bien enregistré
-        if (checkUserInDB($email, $hashed_password)) {
-            header("Location: ../index.php");
-            exit;
-        } else {
-            echo "Invalid email or password";
+        if(registerUserInDb($nom, $prenom, $email, $role, $hashed_password)) {
+            if(checkUserInDB($email, $password)) {
+                echo 'success';
+            } else {
+                $error_register[] = translateErrorMessage('Error[LOGIN]');
+                echo implode('<br>', $error_register);
+            }
         }
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
+        exit();
+
+    } catch (Exception $e) {
+        $technical_error_message = $e->getMessage();
+        $error_register[] = translateErrorMessage($technical_error_message);
+        echo implode('<br>', $error_register);
     }
 }

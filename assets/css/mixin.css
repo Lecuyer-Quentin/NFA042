@@ -1,0 +1,120 @@
+:root {
+    --duration: .4s;
+    --border-size: 3px;
+    --border-color: blue;
+    --button-width: 9rem;
+    --button-height: 2.8rem;
+    --size-radius: 5px;
+}
+
+.button, .button button {
+    width: var(--button-width);
+    position: relative;
+    height: var(--button-height);
+    border-radius: var(--size-radius);
+}
+
+.button:hover .hoverBtn:before,
+.button:hover .hoverBtn:after {
+    opacity: 1;
+    animation: open var(--duration) forwards cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.button:hover .hoverBtn-bottom:before,
+.button:hover .hoverBtn-bottom:after {
+    opacity: 1;
+    animation: openb var(--duration) forwards cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.button p {
+    text-align: center;
+    font-size: 1.3rem;
+    line-height: var(--button-height);
+    background: rgba(0, 0, 0, 0.6);
+}
+
+
+.hoverBtn {
+    width: 100%;
+    height: var(--button-height);
+}
+
+.hoverBtn:before {
+    content: '';
+    position: absolute;
+    height: calc(var(--button-height) * 1.6);
+    width: calc(var(--button-height) * 1.6);
+    display: block;
+    opacity: 0;
+    border-top: solid var(--border-size) var(--border-color);
+    border-left: solid var(--border-size) var(--border-color);
+    border-radius: var(--size-radius) 0 0 var(--size-radius);
+    right: calc(var(--button-width) / 2);
+}
+
+.hoverBtn:after {
+    content: '';
+    position: absolute;
+    height: calc(var(--button-height) * 1.6);
+    width: calc(var(--button-height) * 1.6);
+    display: block;
+    opacity: 0;
+    border-top: solid var(--border-size) var(--border-color);
+    border-right: solid var(--border-size) var(--border-color);
+    border-radius: 0 var(--size-radius) var(--size-radius) 0;
+    left: calc(var(--button-width) / 2);
+}
+
+.hoverBtn-bottom {
+    width: 100%;
+    height: var(--button-height);
+    position: absolute;
+}
+
+.hoverBtn-bottom:before {
+    content: '';
+    position: absolute;
+    height: var(--button-height);
+    width: var(--button-width);
+    display: block;
+    opacity: 0;
+    border-bottom: solid var(--border-size) var(--border-color);
+    border-radius: var(--size-radius) 0 0 var(--size-radius);
+    right: 0;
+}
+
+.hoverBtn-bottom:after {
+    content: '';
+    position: absolute;
+    height: var(--button-height);
+    width: var(--button-width);
+    display: block;
+    opacity: 0;
+    border-bottom: solid var(--border-size) var(--border-color);
+    border-radius: 0 var(--size-radius) var(--size-radius) 0;
+    left: 0;
+}
+
+@keyframes open {
+    0% {
+        width: 0;
+        height: 0;
+    }
+    50% {
+        width: calc(var(--button-width) / 2);
+        height: 0;
+    }
+    100% {
+        width: calc(var(--button-width) / 2);
+        height: var(--button-height);
+    }
+}
+
+@keyframes openb {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: calc(var(--button-width) / 2);
+    }
+}

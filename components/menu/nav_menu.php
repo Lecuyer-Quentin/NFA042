@@ -2,8 +2,17 @@
 require 'assets/data/temp_data.php';
 
 function item_btn($value, $key) {
-    echo "<a class='menu_btn' href='$value'>$key</a>";
+    echo '<div class="button">';
+    
+    echo "<a href='$value'>";
+    echo '<span class="hoverBtn"></span>';
+    echo '<span class="hoverBtn-bottom"></span>';
+    echo "<p>$key</p>";
+    echo '</a>';
+   echo ' </div>';
 }
+
+
 
 function menu_item() {
     global $menu_item;
@@ -15,7 +24,9 @@ function menu_item() {
 }
 
 function displayNavMenu() {
-    echo "<nav><ul>";
-        menu_item();
-    echo "</ul></nav>";
+    echo "<nav>";
+        echo "<ul>";
+            menu_item();
+        echo "</ul>";
+    echo "</nav>";
 }

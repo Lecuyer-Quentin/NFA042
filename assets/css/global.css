@@ -45,10 +45,12 @@ p, h1, h2, h3, h4, h5, h6, a{
 }
 
 header{
+    position: relative;
     background-color: var(--primary-bg);
     color: var(--secondary-text);
     display: flex;
     flex-direction: column;
+    height: auto;
 }
 
 h1{
@@ -56,17 +58,21 @@ h1{
 }
 
 nav{
-    background-color: var(--secondary-bg);
+    position: relative;
+    bottom : 15px;
     margin: 0 5px ;
 }
 nav ul{
     display: flex;
-    justify-content: space-evenly;
-    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-
-
+nav ul li {
+    position : relative;
+}
 footer{
     background-color: var(--primary-bg);
     text-align: center;

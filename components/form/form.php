@@ -1,8 +1,9 @@
 <?php
 
-
 function generateForm($form) {
+
     $class = $form['class'];
+    $id_form = $form['id'] ?? null;
     $header = $form['header'] ?? null;
     $submit = $form['submit'];
     $action = $form['action'];
@@ -11,14 +12,19 @@ function generateForm($form) {
     $fields = $form['fields'];
     $footer = $form['footer'] ?? null;
     $row = $form['row'] ?? null;
+    $btn_value = $form['btn_value'] ?? null;
 
-    echo "<form action='$action' class='$class' method='$method' enctype='$enctype'>";
+    echo "<form id='$id_form' action='$action' class='$class' method='$method' enctype='$enctype'>";
         if($header) {
             echo "<div>";
                 echo "<h2>$header[0]</h2>";
                 echo "<p>$header[1]</p>";
+                echo "<div id='error-message' style='color: red; margin-top: 10px; text-align: center; font-size: .9em; font-weight: bold; border: 1px solid red; padding: 5px;'></div>";
+                echo "<div id='success-message' style='color: green; margin-top: 10px; text-align: center; font-size: .9em; font-weight: bold; border: 1px solid green; padding: 5px;'></div>";
             echo "</div>";
         }
+        
+
         foreach($fields as $field) {
             $type = $field['type'];
             $name = $field['name'];
@@ -65,15 +71,15 @@ function generateForm($form) {
                     break;
                 case 'file':
                     echo "<label for='$name'>$label</label>";
-                    echo "<input type='$type' name='$name' id='$name' required='$required'>";
+                    echo "<input type='$type' name='$name' id='$name' required='$required' accept='image/*'>";
                     break;
                 case "link":
                     echo "<a href='$value'>$label</a>";
                     break;
             }
         }
-        echo "<button type='submit'>$submit</button>";
-
+        echo "<button value='$btn_value' type='submit'>$submit</button>";
+    
         if($footer) {
             echo "<div>";
             foreach($footer as $line) {

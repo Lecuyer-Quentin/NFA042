@@ -69,3 +69,7 @@
 .login_form input:focus {
     border: 1px solid #00bfff;
 }
+
+.login_form button:active {
+  transform: scale(0.98);
+}

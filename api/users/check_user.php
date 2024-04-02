@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../api/db_connect.php';
 
 function checkUserInDB($email, $password) {

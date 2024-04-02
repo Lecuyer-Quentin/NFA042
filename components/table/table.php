@@ -14,9 +14,12 @@ function generateTable($data) {
             echo "<tr>";
                 if($header) {
                     echo "<th colspan='" . (count($columns) + 1) . "'>";
-                    echo "<h3>" . $header[0] . "</h3>";
-                    echo "<p>" . $header[1] . "</p>";
+                        echo "<h3>" . $header[0] . "</h3>";
+                        echo "<span>";
+                            $header[1]();
+                        echo "</span>";
                     echo "</th>"; 
+                    
                 }
             echo "</tr>";
             echo "<tr>";
@@ -40,16 +43,20 @@ function generateTable($data) {
                             generateForm([
                                 'class' => $action['class'],
                                 'submit' => $action['submit'],
-                                'action' => $action['action'],
+                                'action' => $action['action'] ?? null,
                                 'fields' => $action['fields'],
                                 'row' => $row,
                             ]);
                         }
+
                         if($link) {
-                            $url = $link['url'] . $row[0];
-                            $class = $link['class'];
+                            $value = $link['value'];
                             $name = $link['name'];
-                            echo "<button><a href='$url'>$name</a></button>";
+                            $class = $link['class'];
+                            echo '<form method="post">';
+                            echo '<input type="hidden" name="id" value="'.$row[0].'">';
+                            echo '<button type="submit" name="button" value="'.$value.'" class="'.$class.'">'.$name.'</button>';
+                            echo '</form>';
                         }
                         echo "</div>";
                     echo "</td>";

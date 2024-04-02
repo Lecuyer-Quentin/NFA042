@@ -1,29 +1,33 @@
 <?php
-session_start();
 require_once '../api/users/check_user.php';
+require_once '../utils/error_message.php';
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Valider l'email
+    $error_login = [];
+
     if (!isset($_POST['email'])) {
-        die("Invalid email");
+        $error_login[] = translateErrorMessage('Error[EMAIL]');
     }
     $email = $_POST['email'];
 
-    // Valider le mot de passe
     if (!isset($_POST['password'])) {
-        die("Invalid password");
+        $error_login[] = translateErrorMessage('Error[PASSWORD]');
     }
     $password = $_POST['password'];
 
-    // Authentifier l'utilisateur
     try{
-        if (checkUserInDB($email, $password)) {
-            header("Location: ../index.php");
-            exit;
+        if(checkUserInDB($email, $password)){
+            echo 'success';
         } else {
-            echo "Invalid email or password";
+            $error_login[] = translateErrorMessage('Error[LOGIN]');
+            echo implode ('<br>', $error_login);
         }
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
+        exit();
+        
+    } catch (Exception $e) {
+        $technical_error_message = $e->getMessage();
+        $error_login[] = translateErrorMessage($technical_error_message);
+        echo implode ('<br>', $error_login);
     }
 }

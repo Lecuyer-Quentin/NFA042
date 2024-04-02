@@ -22,4 +22,5 @@ function registerUserInDb($nom, $prenom, $email, $role, $password) {
         }
     }
 
+    return true;
 }

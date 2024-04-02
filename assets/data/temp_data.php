@@ -22,6 +22,5 @@ $menu_item = array(
     "Accueil" => "index.php?page=home",
     "Nos Produits" => "index.php?page=products",
     "Contact" => "index.php?page=contact",
-    "Admin" => "index.php?page=admin",
 );
 

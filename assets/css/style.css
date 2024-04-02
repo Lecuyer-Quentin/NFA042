@@ -17,6 +17,8 @@
 @import "button/action_btn.css";
 @import "button/nav_btn.css";
 
+@import "mixin.css";
+
 /* Table */
 @import "table/table.css";
 
