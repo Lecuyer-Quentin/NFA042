@@ -8,6 +8,16 @@
 //    echo "</gmp-map>";
 //    echo "</article>";
 //}
+$adresse_info = [
+    "name"=> "La Boutique",
+    "street" => "123 Fake Street",
+    "zip" => "12345",
+    "city" => "Fake City",
+    "country" => "Fake Country",
+    "telephone" => "0123456789",
+    "email" => "fake.email@fake.com",
+    "opening_hours" => "Monday to Friday, 9am to 6pm"
+];
 
 function iframe_map(){
     echo "<div id='map'>";

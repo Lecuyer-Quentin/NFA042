@@ -1,14 +1,14 @@
 <?php
+require_once 'class/Cart.php';
 
-function countProduct() {
+function countProducts() {
+    $cart = new Cart();
     $count = 0;
-
-    if (isset($_SESSION['cart'])) {
-        foreach ($_SESSION['cart'] as $product_id => $quantity) {
-            $count += $quantity;
+    $products = $cart->getCart();
+    foreach ($products as $product) {
+        if (isset($product['quantity']) && is_numeric($product['quantity'])) {
+            $count += $product['quantity'];
         }
-    } else {
-        $count = 0;
     }
     return $count;
 }

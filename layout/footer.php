@@ -1,9 +1,10 @@
 <?php
 
 function displayFooter() {
-    echo "<footer>
-    <p>&copy; 2024 E-commerce</p>
-    </footer>";
+    $footer = "<footer>";
+    $footer .= "<p>&copy; 2024 E-commerce</p>";
+    $footer .= "</footer>";
+    return $footer;
 }
 
-displayFooter();
+echo displayFooter();

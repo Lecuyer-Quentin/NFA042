@@ -1,9 +1,8 @@
 <?php 
 session_start();
+require_once 'utils/get_JSON.php';
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
-$json = file_get_contents('assets/data/data.json');
-$data = json_decode($json, true);
-$images_meta = $data['images_meta'];
+$meta = get_JSON('data.json', 'images', 'meta');
 ?>
 
 <!DOCTYPE html>
@@ -14,13 +13,11 @@ $images_meta = $data['images_meta'];
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <?php 
-    foreach($images_meta as $image) {
+    foreach($meta as $image) {
         if($image['target'] == $page) {
             echo '<link rel="website icon" type="png" href="'.$image['href'].'">';
     }}
-
     echo '<title>'.ucfirst($page).'</title>';
-
     ?>
     
 </head>          

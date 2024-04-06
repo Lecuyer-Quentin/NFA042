@@ -1,33 +1,33 @@
 <?php
 
 if(isset($_POST['button'])){
-    $button = $_POST['button'];
-    switch($button){
-        case 'Dashboard':
+    $value = $_POST['button'];
+    switch($value){
+        case 'dashboard':
             require_once 'views/admin/dashboard.php';
             break;
-        case 'Users':
-            require_once 'views/admin/users/users.php';
+        case 'users':
+            require_once 'views/admin/users/index.php';
             break;
-        case 'Products':
+        case 'products':
             require_once 'views/admin/products/products.php';
             break;
-        case 'Orders':
+        case 'orders':
             require_once 'views/admin/orders/orders.php';
             break;
-        case 'Settings':
+        case 'settings':
             require_once 'views/admin/settings/settings.php';
             break;
         case 'add_user':
             require_once 'views/admin/users/add.php';
             break;
-        case 'update_user':
+        case 'edit_user':
             require_once 'views/admin/users/edit.php';
             break;
         case 'add_product':
             require_once 'views/admin/products/add.php';
             break;
-        case 'update_product':
+        case 'edit_product':
             require_once 'views/admin/products/edit.php';
             break;
         case 'back':

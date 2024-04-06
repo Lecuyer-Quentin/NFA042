@@ -1,16 +1,16 @@
 <?php
-require_once 'products_table.php';
+require_once 'table.php';
 
-function admin_products_details(){
-    echo '<section>';
-    echo '<h3>Manage products</h3>';
-        echo '<article>';
-            admin_products_table();
-        echo '</article>';
-    echo '</section>';
+function products_details(){
+    $details = '<section>';
+    $details .= '<h3>Manage products</h3>';
+        $details .= display_product_table();
+    $details .= '</section>';
+
+    return $details;
 }
 
-admin_products_details();
+echo products_details();
 
 
 

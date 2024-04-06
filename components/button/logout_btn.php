@@ -1,11 +1,11 @@
 <?php
-function log_out_btn(){
+function logout_btn(){
     $action = 'actions/log_out.php';
-
-        echo "<form action='$action' method='post' class='connect_btn'>";
-            echo '<span class="transition"></span>';
-            echo '<span class="gradient"></span>';
-            echo '<span class="label">Déconnexion</span>';
-            echo "<button type='submit' name='log_out'>Log out</button>";
-        echo "</form>";
+    $btn = "<form action='$action' method='post' class='connect_btn'>";
+        $btn .= '<span class="transition"></span>';
+        $btn .= '<span class="gradient"></span>';
+        $btn .= '<span class="label">Déconnexion</span>';
+        $btn .= "<button type='submit' name='log_out'>Log out</button>";
+    $btn .= "</form>";
+    return $btn;
 }

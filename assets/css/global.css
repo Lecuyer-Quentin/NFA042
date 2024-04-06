@@ -168,52 +168,6 @@ footer{
     border-radius: 5px;
 }
 
-/* USER MENU */
-.menu_user{
-    position: fixed;
-    z-index: 10;
-    top: 5px;
-    right: 2px;
-    width: auto;
-    height: 2.5rem;
-    display: flex;    
-    padding: 0 10px;
-    justify-content: space-evenly;
-    align-items: center;
-    background-color: var(--secondary-bg);
-    color: var(--secondary-text);
-    border-radius: 5px 0 5px 5px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px,
-                rgba(0, 0, 0, 0.19) 0px 10px 10px;
-}
-
-.menu_user p{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.menu_user a{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all ease-in-out 0.3s;
-    cursor: pointer;
-    color: var(--secondary-text);
-    padding: 0 5px;
-}
-
-.menu_user a:hover{
-    translate: translateY(-3px);
-}
-
-.icon{
-    width: 20px;
-    height: 20px;
-}
-/* ___________ */
-
-
 
 /* Changer le nom de la classe contact ici dans les form */
 
