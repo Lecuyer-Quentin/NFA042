@@ -9,67 +9,64 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
     $error_register = [];
     $hashed_password = null;
 
-    if(!isset($_POST['nom'])) {
-        $error_register[] = translateErrorMessage('Error_001[NAME]');
+    if(!isset($_POST['nom']) || empty($_POST['nom'])) {
+        $error_register[] = translateErrorMessage('Error_001[NOM]');
     }
-    $nom = $_POST['nom'];
-
-    if(!isset($_POST['prenom'])) {
+    if(!isset($_POST['prenom']) || empty($_POST['prenom'])) {
         $error_register[] = translateErrorMessage('Error[PRENOM]');
     }
-    $prenom = $_POST['prenom'];
-
     if(!isset($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
         $error_register[] = translateErrorMessage('Error[EMAIL]');
     }
-    $email = $_POST['email'];
-   
-    if(!isset($_POST['password'])) {
+    if(!isset($_POST['password']) || empty($_POST['password'])) {
         $error_register[] = translateErrorMessage('Error[PASSWORD]');
     }
-    $password = $_POST['password'];
-
-    if(!isset($_POST['password_confirm'])) {
+    if(!isset($_POST['password_confirm']) || empty($_POST['password_confirm'])) {
         $error_register[] = translateErrorMessage('Error[PASSWORD_CONFIRM]');
     }
-    $password_confirm = $_POST['password_confirm'];
-
     if(!isset($_POST['role']) || !is_numeric($_POST['role'])) {
         $error_register[] = translateErrorMessage('Error[ROLE]');
     }
-    $role = $_POST['role'];
-
     //? Améliorer la gestion du mot de passe en ajoutant des contraintes de complexité
     //if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/', $password)) {
     //     $error_register[] = translateErrorMessage('Error[PASSWORD_COMPLEXITY]');
     //}
-
     if($password !== $password_confirm) {
         $error_register[] = translateErrorMessage('Error[PASSWORD_CONFIRM]');   
     }
-    
-    if($password === $password_confirm) { 
-        $hashed_password = password_hash($password_confirm, PASSWORD_BCRYPT);
-        if ($hashed_password === false) {
-            $error_register[] = translateErrorMessage('Error[HASH]');
-        }
+    if(!empty($error_register)) {
+        echo nl2br(htmlspecialchars(implode('\n', $error_register)));
+        exit;
     }
 
+    $nom = $_POST['nom'];
+    $prenom = $_POST['prenom'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $password_confirm = $_POST['password_confirm'];
+    $role = $_POST['role'];
 
     try{
         $user = new Users($pdo);
-        $user->register_user($nom, $prenom, $email, $hashed_password, $role);
-        $check_user = $user->check_user($email, $password);
-        if($check_user) {
+        $user->nom = $nom;
+        $user->prenom = $prenom;
+        $user->email = $email;
+        $user->password = $password;
+        $user->id_role = $role;
+        $user->register();
+        $check_user = $user->connect();
+
+        if(!$check_user) {
+            $error_register[] = translateErrorMessage('Error[REGISTER]');
+            echo nl2br(htmlspecialchars(implode('\n', $error_register)));
+        } else {
             echo 'success';
             $_SESSION['user'] = $check_user;
-        } else {
-            $error_register[] = translateErrorMessage('Error[LOGIN]');
-            echo implode('<br>', $error_register);
         }
     } catch (Exception $e) {
         $technical_error_message = $e->getMessage();
         $error_register[] = translateErrorMessage($technical_error_message);
-        echo implode('<br>', $error_register);
+        echo nl2br(htmlspecialchars(implode('\n', $error_register)));
     }
+    exit;
 }

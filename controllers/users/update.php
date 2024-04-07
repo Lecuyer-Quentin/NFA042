@@ -1,44 +1,61 @@
 <?php 
-require_once '../../models/Users.php';
-require_once '../../config/database.php';
-
+include_once '../../utils/error_message.php';
+include_once '../../models/Users.php';
+include_once '../../config/database.php';
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $error_update = [];
 
     if(!isset($_POST['id']) || !is_numeric($_POST['id'])) {
-        throw new Exception('ID invalide');
+        $error_update[] = translateErrorMessage('Error[ID]'); 
     }
-    $id = $_POST['id'];
     if(!isset($_POST['nom']) || empty($_POST['nom'])) {
-        throw new Exception('Nom invalide');
+        $error_update[] = translateErrorMessage('Error[NOM]'); 
     }
-    $nom = $_POST['nom'];
     if(!isset($_POST['prenom']) || empty($_POST['prenom'])) {
-        throw new Exception('Prénom invalide');
+        $error_update[] = translateErrorMessage('Error[PRENOM]'); 
     }
-    $prenom = $_POST['prenom'];
-    if(!isset($_POST['email']) || empty($_POST['email'])) {
-        throw new Exception('Email invalide');
+    if(!isset($_POST['email']) || empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+        $error_update[] = translateErrorMessage('Error[EMAIL]'); 
     }
-    $email = $_POST['email'];
     if(!isset($_POST['role']) || !is_numeric($_POST['role'])) {
-        throw new Exception('Role invalide');
+        $error_update[] = translateErrorMessage('Error[ROLE]'); 
     }
+    if(!empty($error_update)) {
+        echo nl2br(htmlspecialchars(implode('\n', $error_update)));
+        exit;
+    }
+
+    $id = $_POST['id'];
+    $nom = $_POST['nom'];
+    $prenom = $_POST['prenom'];
+    $email = $_POST['email'];    
     $role = $_POST['role'];
-
-
 
     try{
         $user = new Users($pdo);
-        $user->update_user($nom, $prenom, $email, $role, $id);
-        
+        $user->id_utilisateur = $id;
+        $user->nom = $nom;
+        $user->prenom = $prenom;
+        $user->email = $email;
+        $user->id_role = $role;
+        $user->update();
+
+        //? Utiliser par Ajax pour savoir si la requête a fonctionné
+        echo 'success';
+        //? À modifier
+
     } catch (Exception $e) {
-        throw new Exception($e->getMessage());
+        $technical_error_message = $e->getMessage();
+        $error_update[] = translateErrorMessage($technical_error_message);
+        echo nl2br(htmlspecialchars(implode('\n', $error_update)));
+        error_log($e->getMessage());
     }
 
     if($_SERVER['HTTP_REFERER']) {
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     } else {
-        header('Location: /admin_users');
+        //header('Location: /admin');
     }
+    exit;
 }
