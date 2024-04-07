@@ -149,11 +149,11 @@
             "content": "Ajouter un produit",
             "action": "controllers/products/add.php",
             "fields":[
-                {"type": "input", "name": "name", "label": "Nom", "required": true},
-                {"type": "number", "name": "price", "label": "Prix", "required": true},
+                {"type": "input", "name": "nom", "label": "Nom", "required": true},
+                {"type": "number", "name": "prix", "label": "Prix", "required": true},
                 {"type": "textarea", "name": "description", "label": "Description", "required": true},
                 {"type": "file", "name": "image", "label": "Image", "required": true},
-                {"type": "select", "name": "category", "label": "Catégorie", "required": true}
+                {"type": "select", "name": "categorie", "label": "Catégorie", "required": true}
             ],
             "header": [
                 {"type": "h2", "content": "Ajouter un produit"},
@@ -172,7 +172,7 @@
                 {"type": "number", "name": "prix", "label": "Prix", "required": true},
                 {"type": "textarea", "name": "description", "label": "Description", "required": true},
                 {"type": "file", "name": "image", "label": "Image", "required": true},
-                {"type": "select", "name": "id_categorie", "label": "Catégorie", "required": true}
+                {"type": "select", "name": "categorie", "label": "Catégorie", "required": true}
             ],
             "header": [
                 {"type": "h2", "content": "Modifier un produit"},
